@@ -3,7 +3,7 @@
 namespace Beelab\LapTypeBundle\Twig;
 
 use Twig_Extension;
-use Twig_SimpleFunction;
+use Twig_SimpleFilter;
 
 /**
  * BeelabLapTypeTwigExtension
@@ -37,10 +37,10 @@ class BeelabLapTypeTwigExtension extends Twig_Extension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFilters()
     {
         return array(
-            new Twig_SimpleFunction('lap', array($this, 'lap')),
+            new Twig_SimpleFilter('lap', array($this, 'lap')),
         );
     }
 

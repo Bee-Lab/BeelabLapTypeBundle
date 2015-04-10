@@ -60,7 +60,7 @@ Example:
 ```jinja
 {# your twig template #}
 {% block body %}
-    {# will show something like 01:23:45.678 #}
+    {# will show something like 1:23:45.678 #}
     Lap time: {{ entity.time|lap }}
 
     {# will show something like 23:45.678 #}

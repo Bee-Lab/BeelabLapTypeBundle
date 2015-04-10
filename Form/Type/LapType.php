@@ -2,7 +2,7 @@
 
 namespace Beelab\LapTypeBundle\Form\Type;
 
-use AppBundle\Form\LapToArrayTransformer;
+use Beelab\LapTypeBundle\Form\DataTransformer\LapToArrayTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;

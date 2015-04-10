@@ -25,7 +25,6 @@ class BeelabLapTypeExtension extends Extension
         $container->setParameter('beelab_lap.lap_form_type', $config['lap_form_type']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('forms.xml');
         $loader->load('services.xml');
     }
 }
