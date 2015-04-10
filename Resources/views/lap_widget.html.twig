@@ -1,0 +1,8 @@
+{% block lap_widget %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-inline lap')|trim}) %}
+    <div {{ block('widget_container_attributes') }}>
+        {% if with_hours %}{{ form_widget(form.hour, vars) }} : {% endif -%}
+        {{ form_widget(form.minute) }} : {{ form_widget(form.second, vars) }}
+        {%- if with_milliseconds %} . {{ form_widget(form.millisecond) }}{% endif %}
+    </div>
+{% endblock %}
