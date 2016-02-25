@@ -13,7 +13,8 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 class LapToArrayTransformer implements DataTransformerInterface
 {
     /**
-     * @param  integer $lapInteger
+     * @param int $lapInteger
+     *
      * @return array
      */
     public function transform($lapInteger)
@@ -30,16 +31,17 @@ class LapToArrayTransformer implements DataTransformerInterface
         $hour = ($lapInteger - $millisecond - $second * 1000 - $minute * 60 * 1000) / 3600000 % 24;
 
         return [
-            'hour'        => str_pad($hour, 2, '0', STR_PAD_LEFT),
-            'minute'      => str_pad($minute, 2, '0', STR_PAD_LEFT),
-            'second'      => str_pad($second, 2, '0', STR_PAD_LEFT),
+            'hour' => str_pad($hour, 2, '0', STR_PAD_LEFT),
+            'minute' => str_pad($minute, 2, '0', STR_PAD_LEFT),
+            'second' => str_pad($second, 2, '0', STR_PAD_LEFT),
             'millisecond' => str_pad($millisecond, 3, '0', STR_PAD_LEFT),
         ];
     }
 
     /**
-     * @param  array   $lapArray
-     * @return integer
+     * @param array $lapArray
+     *
+     * @return int
      */
     public function reverseTransform($lapArray)
     {

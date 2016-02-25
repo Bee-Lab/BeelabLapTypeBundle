@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LapType extends AbstractType
 {
@@ -65,13 +65,15 @@ class LapType extends AbstractType
             $milliseconds[$millisecond] = str_pad($millisecond, 3, '0', STR_PAD_LEFT);
         }
 
+        $integerType = $this->isLegacy() ? 'integer' : 'Symfony\Component\Form\Extension\Core\Type\IntegerType'
+
         if ($options['with_hours']) {
-            $builder->add('hour', 'integer', $hourOptions);
+            $builder->add('hour', $integerType, $hourOptions);
         }
-        $builder->add('minute', 'integer', $minuteOptions);
-        $builder->add('second', 'integer', $secondOptions);
+        $builder->add('minute', $integerType, $minuteOptions);
+        $builder->add('second', $integerType, $secondOptions);
         if ($options['with_milliseconds']) {
-            $builder->add('millisecond', 'integer', $millisecondOptions);
+            $builder->add('millisecond', $integerType, $millisecondOptions);
         }
 
         $builder->addModelTransformer(new LapToArrayTransformer());
@@ -91,7 +93,7 @@ class LapType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $compound = function (Options $options) {
             return true;
@@ -147,8 +149,24 @@ class LapType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
+
+    /**
+     * BC for Symfony < 3.0.
+     */
     public function getName()
     {
         return 'beelab_lap';
+    }
+
+    /**
+     * @return bool
+     */
+    private function isLegacy()
+    {
+        return !method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix');
     }
 }

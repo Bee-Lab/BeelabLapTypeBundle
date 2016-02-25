@@ -6,15 +6,16 @@ use Twig_Extension;
 use Twig_SimpleFilter;
 
 /**
- * BeelabLapTypeTwigExtension
+ * BeelabLapTypeTwigExtension.
  */
 class BeelabLapTypeTwigExtension extends Twig_Extension
 {
     /**
-     * Converts a milliseconds lap in a lap made of hours:minutes:seconds.milliseconds
+     * Converts a milliseconds lap in a lap made of hours:minutes:seconds.milliseconds.
      *
-     * @param  integer $lapInteger
-     * @param  boolean $hours      Wether to use hours or not
+     * @param int  $lapInteger
+     * @param bool $hours      Wether to use hours or not
+     *
      * @return string
      */
     public function lap($lapInteger, $hours = true)
