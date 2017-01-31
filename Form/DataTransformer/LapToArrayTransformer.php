@@ -22,7 +22,7 @@ class LapToArrayTransformer implements DataTransformerInterface
         if (null === $lapInteger) {
             return;
         }
-        if (!is_integer($lapInteger)) {
+        if (!is_int($lapInteger)) {
             throw new TransformationFailedException('Expected an integer.');
         }
         $millisecond = $lapInteger % 1000;

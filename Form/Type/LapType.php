@@ -4,6 +4,7 @@ namespace Beelab\LapTypeBundle\Form\Type;
 
 use Beelab\LapTypeBundle\Form\DataTransformer\LapToArrayTransformer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -17,40 +18,40 @@ class LapType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $parts = array('hour', 'minute', 'second', 'millisecond');
+        $parts = ['hour', 'minute', 'second', 'millisecond'];
 
-        $hourOptions = array(
+        $hourOptions = [
             'error_bubbling' => true,
-            'attr'           => array(
+            'attr' => [
                 'placeholder' => $options['placeholders']['hour'],
-                'min'         => 0,
-                'max'         => 23,
-            ),
-        );
-        $minuteOptions = array(
+                'min' => 0,
+                'max' => 23,
+            ],
+        ];
+        $minuteOptions = [
             'error_bubbling' => true,
-            'attr'           => array(
+            'attr' => [
                 'placeholder' => $options['placeholders']['minute'],
-                'min'         => 0,
-                'max'         => 59,
-            ),
-        );
-        $secondOptions = array(
+                'min' => 0,
+                'max' => 59,
+            ],
+        ];
+        $secondOptions = [
             'error_bubbling' => true,
-            'attr' => array(
+            'attr' => [
                 'placeholder' => $options['placeholders']['second'],
-                'min'         => 0,
-                'max'         => 59,
-            ),
-        );
-        $millisecondOptions = array(
+                'min' => 0,
+                'max' => 59,
+            ],
+        ];
+        $millisecondOptions = [
             'error_bubbling' => true,
-            'attr'           => array(
+            'attr' => [
                 'placeholder' => $options['placeholders']['millisecond'],
-                'min'         => 0,
-                'max'         => 999,
-            ),
-        );
+                'min' => 0,
+                'max' => 999,
+            ],
+        ];
 
         foreach ($options['hours'] as $hour) {
             $hours[$hour] = str_pad($hour, 2, '0', STR_PAD_LEFT);
@@ -65,15 +66,13 @@ class LapType extends AbstractType
             $milliseconds[$millisecond] = str_pad($millisecond, 3, '0', STR_PAD_LEFT);
         }
 
-        $integerType = $this->isLegacy() ? 'integer' : 'Symfony\Component\Form\Extension\Core\Type\IntegerType'
-
         if ($options['with_hours']) {
-            $builder->add('hour', $integerType, $hourOptions);
+            $builder->add('hour', IntegerType::class, $hourOptions);
         }
-        $builder->add('minute', $integerType, $minuteOptions);
-        $builder->add('second', $integerType, $secondOptions);
+        $builder->add('minute', IntegerType::class, $minuteOptions);
+        $builder->add('second', IntegerType::class, $secondOptions);
         if ($options['with_milliseconds']) {
-            $builder->add('millisecond', $integerType, $millisecondOptions);
+            $builder->add('millisecond', IntegerType::class, $millisecondOptions);
         }
 
         $builder->addModelTransformer(new LapToArrayTransformer());
@@ -84,10 +83,10 @@ class LapType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars = array_replace($view->vars, array(
-            'with_hours'        => $options['with_hours'],
+        $view->vars = array_replace($view->vars, [
+            'with_hours' => $options['with_hours'],
             'with_milliseconds' => $options['with_milliseconds'],
-        ));
+        ]);
     }
 
     /**
@@ -99,51 +98,44 @@ class LapType extends AbstractType
             return true;
         };
 
-        $emptyValue = $placeholderDefault = function (Options $options) {
+        $placeholder = function (Options $options) {
             return $options['required'] ? null : '';
         };
-
-        // for BC with the "empty_value" option
-        $placeholder = function (Options $options) {
-            return $options['empty_value'];
-        };
+        $placeholderDefault = $placeholder;
 
         $placeholderNormalizer = function (Options $options, $placeholder) use ($placeholderDefault) {
             if (is_array($placeholder)) {
                 $default = $placeholderDefault($options);
 
                 return array_merge(
-                    array('hour' => $default, 'minute' => $default, 'second' => $default, 'millisecond' => $default),
+                    ['hour' => $default, 'minute' => $default, 'second' => $default, 'millisecond' => $default],
                     $placeholder
                 );
             }
 
-            return array(
-                'hour'        => $placeholder,
-                'minute'      => $placeholder,
-                'second'      => $placeholder,
+            return [
+                'hour' => $placeholder,
+                'minute' => $placeholder,
+                'second' => $placeholder,
                 'millisecond' => $placeholder,
-            );
+            ];
         };
 
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'hours' => range(0, 23),
             'minutes' => range(0, 59),
             'seconds' => range(0, 59),
             'milliseconds' => range(0, 999),
             'with_hours' => true,
             'with_milliseconds' => true,
-            'empty_value' => $emptyValue, // deprecated
             'placeholder' => $placeholder,
-            'placeholders' => array('hour' => 'hh', 'minute' => 'mm', 'second' => 'ss', 'millisecond' => '000'),
+            'placeholders' => ['hour' => 'hh', 'minute' => 'mm', 'second' => 'ss', 'millisecond' => '000'],
             'error_bubbling' => false,
             'compound' => $compound,
-        ));
+        ]);
 
-        $resolver->setNormalizers(array(
-            'empty_value' => $placeholderNormalizer,
-            'placeholder' => $placeholderNormalizer,
-        ));
+        $resolver->setNormalizer('empty_value', $placeholderNormalizer);
+        $resolver->setNormalizer('placeholder', $placeholderNormalizer);
     }
 
     /**
@@ -151,22 +143,6 @@ class LapType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return $this->getName();
-    }
-
-    /**
-     * BC for Symfony < 3.0.
-     */
-    public function getName()
-    {
         return 'beelab_lap';
-    }
-
-    /**
-     * @return bool
-     */
-    private function isLegacy()
-    {
-        return !method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix');
     }
 }

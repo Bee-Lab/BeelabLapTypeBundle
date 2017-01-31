@@ -40,16 +40,8 @@ class BeelabLapTypeTwigExtension extends Twig_Extension
      */
     public function getFilters()
     {
-        return array(
-            new Twig_SimpleFilter('lap', array($this, 'lap')),
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'beelab_laptype_twig_extension';
+        return [
+            new Twig_SimpleFilter('lap', [$this, 'lap']),
+        ];
     }
 }
