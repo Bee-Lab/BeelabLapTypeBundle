@@ -10,6 +10,7 @@ class LapToArrayTransformerTest extends TestCase
     public function testTransform()
     {
         $this->markTestIncomplete();
+        $trans = new LapToArrayTransformer();
     }
 
     public function testReverseTransform()

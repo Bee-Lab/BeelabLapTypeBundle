@@ -9,11 +9,17 @@ class BeelabLapTypeTwigExtensionTest extends TestCase
 {
     public function testLap()
     {
-        $this->markTestIncomplete();
+        $ext = new BeelabLapTypeTwigExtension();
+        $lap = $ext->lap(120000);
+        $this->assertEquals('0:02:00.000', $lap);
+        $lap = $ext->lap(120000, false);
+        $this->assertEquals('02:00.000', $lap);
     }
 
-    public function getFilters()
+    public function testGetFilters()
     {
-        $this->markTestIncomplete();
+        $ext = new BeelabLapTypeTwigExtension();
+        $filters = $ext->getFilters();
+        $this->assertCount(1, $filters);
     }
 }
