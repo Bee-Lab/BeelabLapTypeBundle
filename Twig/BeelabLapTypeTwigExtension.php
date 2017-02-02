@@ -18,7 +18,7 @@ class BeelabLapTypeTwigExtension extends Twig_Extension
      *
      * @return string
      */
-    public function lap($lapInteger, $hours = true)
+    public function lap(int $lapInteger, bool $hours = true): string
     {
         $return = '';
         $millisecond = $lapInteger % 1000;
@@ -38,7 +38,7 @@ class BeelabLapTypeTwigExtension extends Twig_Extension
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new Twig_SimpleFilter('lap', [$this, 'lap']),
