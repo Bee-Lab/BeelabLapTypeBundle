@@ -3,7 +3,7 @@
 namespace Beelab\LapTypeBundle\Tests\DependencyInjection;
 
 use Beelab\LapTypeBundle\DependencyInjection\BeelabLapTypeExtension;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 class BeelabLapTypeExtensionTest extends TestCase
 {
@@ -17,6 +17,8 @@ class BeelabLapTypeExtensionTest extends TestCase
         $extension = $this->createMock('Beelab\\LapTypeBundle\\DependencyInjection\\BeelabLapTypeExtension');
 
         $extension->load([[]], $container);
+
+        $this->assertTrue(true);
     }
 
     public function testLoadSetParameters()
@@ -40,5 +42,7 @@ class BeelabLapTypeExtensionTest extends TestCase
             ['lap_form_type' => 'RandomType'],
         ];
         $extension->load($configs, $container);
+
+        $this->assertTrue(true);
     }
 }

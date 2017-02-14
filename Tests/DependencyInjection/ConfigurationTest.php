@@ -3,7 +3,7 @@
 namespace Beelab\LapTypeBundle\Tests\DependencyInjection;
 
 use Beelab\LapTypeBundle\DependencyInjection\Configuration;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 class ConfigurationTest extends TestCase
 {

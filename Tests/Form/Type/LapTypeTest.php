@@ -3,7 +3,7 @@
 namespace Beelab\LapTypeBundle\Tests\Form\Type;
 
 use Beelab\LapTypeBundle\Form\Type\LapType;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 class LapTypeTest extends TestCase
 {
@@ -19,6 +19,7 @@ class LapTypeTest extends TestCase
     public function testBuildForm()
     {
         $builder = $this->createMock('Symfony\Component\Form\FormBuilderInterface');
+        $builder->expects($this->exactly(4))->method('add');
         $options = [
             'placeholders' => ['hour' => 'H', 'minute' => 'm', 'second' => 's', 'millisecond' => 'ms'],
             'hours' => range(0, 23),
