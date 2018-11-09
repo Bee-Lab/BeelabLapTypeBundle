@@ -5,7 +5,7 @@ namespace Beelab\LapTypeBundle\Tests\Twig;
 use Beelab\LapTypeBundle\Twig\BeelabLapTypeTwigExtension;
 use PHPUnit\Framework\TestCase;
 
-class BeelabLapTypeTwigExtensionTest extends TestCase
+final class BeelabLapTypeTwigExtensionTest extends TestCase
 {
     public function testLap()
     {

@@ -13,9 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LapType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $parts = ['hour', 'minute', 'second', 'millisecond'];
@@ -54,16 +51,16 @@ class LapType extends AbstractType
         ];
 
         foreach ($options['hours'] as $hour) {
-            $hours[$hour] = str_pad($hour, 2, '0', STR_PAD_LEFT);
+            $hours[$hour] = \str_pad($hour, 2, '0', STR_PAD_LEFT);
         }
         foreach ($options['minutes'] as $minute) {
-            $minutes[$minute] = str_pad($minute, 2, '0', STR_PAD_LEFT);
+            $minutes[$minute] = \str_pad($minute, 2, '0', STR_PAD_LEFT);
         }
         foreach ($options['seconds'] as $second) {
-            $seconds[$second] = str_pad($second, 2, '0', STR_PAD_LEFT);
+            $seconds[$second] = \str_pad($second, 2, '0', STR_PAD_LEFT);
         }
         foreach ($options['milliseconds'] as $millisecond) {
-            $milliseconds[$millisecond] = str_pad($millisecond, 3, '0', STR_PAD_LEFT);
+            $milliseconds[$millisecond] = \str_pad($millisecond, 3, '0', STR_PAD_LEFT);
         }
 
         if ($options['with_hours']) {
@@ -78,20 +75,14 @@ class LapType extends AbstractType
         $builder->addModelTransformer(new LapToArrayTransformer());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars = array_replace($view->vars, [
+        $view->vars = \array_replace($view->vars, [
             'with_hours' => $options['with_hours'],
             'with_milliseconds' => $options['with_milliseconds'],
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $compound = function (Options $options) {
@@ -104,10 +95,10 @@ class LapType extends AbstractType
         $placeholderDefault = $placeholder;
 
         $placeholderNormalizer = function (Options $options, $placeholder) use ($placeholderDefault) {
-            if (is_array($placeholder)) {
+            if (\is_array($placeholder)) {
                 $default = $placeholderDefault($options);
 
-                return array_merge(
+                return \array_merge(
                     ['hour' => $default, 'minute' => $default, 'second' => $default, 'millisecond' => $default],
                     $placeholder
                 );
@@ -122,10 +113,10 @@ class LapType extends AbstractType
         };
 
         $resolver->setDefaults([
-            'hours' => range(0, 23),
-            'minutes' => range(0, 59),
-            'seconds' => range(0, 59),
-            'milliseconds' => range(0, 999),
+            'hours' => \range(0, 23),
+            'minutes' => \range(0, 59),
+            'seconds' => \range(0, 59),
+            'milliseconds' => \range(0, 999),
             'with_hours' => true,
             'with_milliseconds' => true,
             'placeholder' => $placeholder,
@@ -138,10 +129,7 @@ class LapType extends AbstractType
         $resolver->setNormalizer('placeholder', $placeholderNormalizer);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'beelab_lap';
     }

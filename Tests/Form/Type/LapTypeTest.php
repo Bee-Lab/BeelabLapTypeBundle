@@ -5,7 +5,7 @@ namespace Beelab\LapTypeBundle\Tests\Form\Type;
 use Beelab\LapTypeBundle\Form\Type\LapType;
 use PHPUnit\Framework\TestCase;
 
-class LapTypeTest extends TestCase
+final class LapTypeTest extends TestCase
 {
     public function testBuildView()
     {
@@ -22,10 +22,10 @@ class LapTypeTest extends TestCase
         $builder->expects($this->exactly(4))->method('add');
         $options = [
             'placeholders' => ['hour' => 'H', 'minute' => 'm', 'second' => 's', 'millisecond' => 'ms'],
-            'hours' => range(0, 23),
-            'minutes' => range(0, 59),
-            'seconds' => range(0, 59),
-            'milliseconds' => range(0, 99),
+            'hours' => \range(0, 23),
+            'minutes' => \range(0, 59),
+            'seconds' => \range(0, 59),
+            'milliseconds' => \range(0, 99),
             'with_hours' => true,
             'with_milliseconds' => true,
             'required' => false,

@@ -28,9 +28,9 @@ class BeelabLapTypeTwigExtension extends Twig_Extension
             $hour = ($lapInteger - $millisecond - $second * 1000 - $minute * 60 * 1000) / 3600000 % 24;
             $return = $hour.':';
         }
-        $minute = str_pad($minute, 2, '0', STR_PAD_LEFT);
-        $second = str_pad($second, 2, '0', STR_PAD_LEFT);
-        $millisecond = str_pad($millisecond, 3, '0', STR_PAD_LEFT);
+        $minute = \str_pad($minute, 2, '0', STR_PAD_LEFT);
+        $second = \str_pad($second, 2, '0', STR_PAD_LEFT);
+        $millisecond = \str_pad($millisecond, 3, '0', STR_PAD_LEFT);
 
         return $return."$minute:$second.$millisecond";
     }

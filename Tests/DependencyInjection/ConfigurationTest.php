@@ -5,7 +5,7 @@ namespace Beelab\LapTypeBundle\Tests\DependencyInjection;
 use Beelab\LapTypeBundle\DependencyInjection\Configuration;
 use PHPUnit\Framework\TestCase;
 
-class ConfigurationTest extends TestCase
+final class ConfigurationTest extends TestCase
 {
     public function testThatCanGetConfigTreeBuilder()
     {

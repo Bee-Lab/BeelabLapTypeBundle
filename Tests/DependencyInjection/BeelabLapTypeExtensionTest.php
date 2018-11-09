@@ -5,7 +5,7 @@ namespace Beelab\LapTypeBundle\Tests\DependencyInjection;
 use Beelab\LapTypeBundle\DependencyInjection\BeelabLapTypeExtension;
 use PHPUnit\Framework\TestCase;
 
-class BeelabLapTypeExtensionTest extends TestCase
+final class BeelabLapTypeExtensionTest extends TestCase
 {
     public function testLoadFailure()
     {

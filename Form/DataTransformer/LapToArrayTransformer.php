@@ -10,19 +10,14 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
  *
  * @author Massimiliano Arione <massimiliano.arione@bee-lab.net>
  */
-class LapToArrayTransformer implements DataTransformerInterface
+final class LapToArrayTransformer implements DataTransformerInterface
 {
-    /**
-     * @param int $lapInteger
-     *
-     * @return array
-     */
     public function transform($lapInteger)
     {
         if (null === $lapInteger) {
             return;
         }
-        if (!is_int($lapInteger)) {
+        if (!\is_int($lapInteger)) {
             throw new TransformationFailedException('Expected an integer.');
         }
         $millisecond = $lapInteger % 1000;
@@ -31,24 +26,19 @@ class LapToArrayTransformer implements DataTransformerInterface
         $hour = ($lapInteger - $millisecond - $second * 1000 - $minute * 60 * 1000) / 3600000 % 24;
 
         return [
-            'hour' => str_pad($hour, 2, '0', STR_PAD_LEFT),
-            'minute' => str_pad($minute, 2, '0', STR_PAD_LEFT),
-            'second' => str_pad($second, 2, '0', STR_PAD_LEFT),
-            'millisecond' => str_pad($millisecond, 3, '0', STR_PAD_LEFT),
+            'hour' => \str_pad($hour, 2, '0', STR_PAD_LEFT),
+            'minute' => \str_pad($minute, 2, '0', STR_PAD_LEFT),
+            'second' => \str_pad($second, 2, '0', STR_PAD_LEFT),
+            'millisecond' => \str_pad($millisecond, 3, '0', STR_PAD_LEFT),
         ];
     }
 
-    /**
-     * @param array $lapArray
-     *
-     * @return int
-     */
     public function reverseTransform($lapArray)
     {
         if (null === $lapArray) {
             return;
         }
-        if (!is_array($lapArray)) {
+        if (!\is_array($lapArray)) {
             throw new TransformationFailedException('Expected an array.');
         }
         $millisecond = isset($lapArray['millisecond']) ? $lapArray['millisecond'] : 0;
